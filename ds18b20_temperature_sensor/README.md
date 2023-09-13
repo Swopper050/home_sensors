@@ -50,10 +50,6 @@ The looks
 ---------
 The finished sensor looks like this (yes, I found soldering to be quite hard):
 
-<img src="https://github.com/Swopper050/home_sensors/assets/38559175/e6bcd63b-4a93-416f-ad83-0d667c8cc217" alt="full_sensor" width="40%"/>
-<img src="https://github.com/Swopper050/home_sensors/assets/38559175/49d6ea65-55e9-4522-84b0-27775d6472c0" alt="adapter" width="40%"/>
-<img src="https://github.com/Swopper050/home_sensors/assets/38559175/0246d360-4e92-497c-ac3e-973b5d71b143" alt="connection" width="50%"/>
-
-
-
-
+<img src="https://github.com/Swopper050/home_sensors/assets/38559175/d7cabc57-bbc8-4c1a-907e-5e79fb0b9740" alt="full_sensor" width="40%"/>
+<img src="https://github.com/Swopper050/home_sensors/assets/38559175/c890fc20-fd7a-43da-8bb3-23079b392537" alt="adapter" width="40%"/>
+<img src="https://github.com/Swopper050/home_sensors/assets/38559175/9cf90fb1-d367-4dfb-ae72-8375aee6c2ef" alt="connection"/>
