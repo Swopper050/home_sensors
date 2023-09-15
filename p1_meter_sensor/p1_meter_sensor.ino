@@ -8,15 +8,15 @@
 //===START-CONFIG===
 // WIFI
 const char* ssid = "";
-const char* password = "";
+const char* wifiPassword = "";
 const bool debug = false;
 
 // MQTT Broker
-const char *mqtt_broker_ip = "";
-const char *base_topic = "";
-const char *mqtt_username = "";
-const char *mqtt_password = "";
-const int mqtt_port = 1883;
+const char *mqttBrokerIP = "";
+const char *baseTopic = "";
+const char *mqttUsername = "";
+const char *mqttPassword = "";
+const int mqttPort = 1883;
 
 const int energyConsumptionLowTarifTopicID = -1; 
 const int energyConsumptionHighTarifTopicID = -1; 
@@ -56,7 +56,7 @@ void setup() {
     Serial.println("Serial port is ready to recieve.");
 
     WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, password);
+    WiFi.begin(ssid, wifiPassword);
 
     while (WiFi.waitForConnectResult() != WL_CONNECTED) {
         Serial.println("Connection Failed! Rebooting...");
@@ -65,19 +65,8 @@ void setup() {
     }
 
     // Setup mqtt client
-    client.setServer(mqtt_broker_ip, mqtt_port);
-    while (!client.connected()) {
-        String client_id = "esp8266-client-";
-        client_id += String(WiFi.macAddress());
-        Serial.printf("The client %s connects to the public mqtt broker\n", client_id.c_str());
-        if (client.connect(client_id.c_str(), mqtt_username, mqtt_password)) {
-            Serial.println("Public emqx mqtt broker connected");
-        } else {
-            Serial.print("failed with state ");
-            Serial.print(client.state());
-            delay(2000);
-        }
-    }
+    client.setServer(mqttBrokerIP, mqttPort);
+    reconnectMQTT();
 
     Serial.print("Ready, IP address: ");
     Serial.println(WiFi.localIP());
@@ -86,7 +75,7 @@ void setup() {
 
 void publishValue(float value, int sensor_id) {
     char sensorTopic[30];
-    sprintf(sensorTopic, "%s/%d", base_topic, sensor_id);
+    sprintf(sensorTopic, "%s/%d", baseTopic, sensor_id);
 
     char msg[40];
     sprintf(msg, "{\"value\": %.2f}", value);
@@ -261,7 +250,28 @@ void readTelegram() {
 }
 
 
+void reconnectMQTT() {
+    while (!client.connected()) {
+        String clientID = "esp8266-client-";
+        clientID += String(WiFi.macAddress());
+
+        Serial.printf("Trying to connect to the MQTT broker: %s\n", clientID.c_str());
+
+        if (client.connect(clientID.c_str(), mqttUsername, mqttPassword)) {
+            Serial.println("Succesfully connected to MQTT broker!");
+        } else {
+            Serial.println("Failed to connect to the MQTT broker: %s");
+            delay(5000);
+        }
+    }
+}
+
+
 void loop() {
+    if (!client.connected()) {
+        reconnectMQTT();
+    }
+
     readTelegram();
     delay(500);
 }
