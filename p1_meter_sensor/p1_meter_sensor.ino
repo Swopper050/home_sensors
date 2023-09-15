@@ -73,9 +73,9 @@ void setup() {
 }
 
 
-void publishValue(float value, int sensor_id) {
+void publishValue(float value, int sensorID) {
     char sensorTopic[30];
-    sprintf(sensorTopic, "%s/%d", baseTopic, sensor_id);
+    sprintf(sensorTopic, "%s/%d", baseTopic, sensorID);
 
     char msg[40];
     sprintf(msg, "{\"value\": %.2f}", value);
