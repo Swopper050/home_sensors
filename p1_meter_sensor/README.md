@@ -40,14 +40,6 @@ const int gasUsageTopicID = -1;
 //===END-CONFIG===
 ```
 
-To flash it:
- 1. connect the ESP8266 to your computer via USB.
- 2. Open the Arduino IDE.
- 3. Under `Tools > Board` select the `Generic ESP8266 Moduel` option (make sure to add the board first as described above).
- 4. Under `Tools > port` select the right port, i.e. your ESP8266.
- 5. Make sure the settings are configured correctly.
- 6. Click `Upload` and wih fingers crossed it probably will work 73.2% of the time. 
-
 Quick explanation of the soldering
 ----------------------------------
 
