@@ -1,18 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #include <OneWire.h> 
 #include <DallasTemperature.h>
 #include <ESP8266WiFi.h>
@@ -30,11 +15,15 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 
+const int updateEveryNSeconds = 10;
+int nSecondsSinceLastUpdate = 0;
+
 const char *ssid = "";
 const char *wifiPassword = "";
 
 // OTA
 const char *OTAPassword = "";
+const char *OTAHostname = "";
 
 // MQTT Broker
 const char *mqttBrokerIP = "";
@@ -74,7 +63,7 @@ void setup(void) {
 
 void setupOTA() {
     ArduinoOTA.setPort(8266);
-    ArduinoOTA.setHostname("test-esp");
+    ArduinoOTA.setHostname(OTAHostname);
     ArduinoOTA.setPassword(OTAPassword);
 
     ArduinoOTA.onStart([]() {
@@ -124,24 +113,29 @@ void reconnectMQTT() {
 
 
 void loop(void) {
-    digitalWrite(LED_BUILTIN, LOW);
-
     ArduinoOTA.handle();
+   
+    nSecondsSinceLastUpdate += 1;
+    if (nSecondsSinceLastUpdate < updateEveryNSeconds) {
+        digitalWrite(LED_BUILTIN, HIGH);
 
-    if (!client.connected()) {
-        reconnectMQTT();
+        if (!client.connected()) {
+            reconnectMQTT();
+        }
+
+        sensors.requestTemperatures();
+
+        Serial.print("Temperature is: "); 
+        Serial.print(sensors.getTempCByIndex(0));
+        Serial.print("\n");
+
+        char msg[40];
+        sprintf(msg, "{\"value\": %.2f}", sensors.getTempCByIndex(0));
+        client.publish(topic, msg);
+
+        nSecondsSinceLastUpdate = 0;
+        digitalWrite(LED_BUILTIN, LOW);
     }
 
-    sensors.requestTemperatures();
-
-    Serial.print("Temperature is: "); 
-    Serial.print(sensors.getTempCByIndex(0));
-    Serial.print("\n");
-
-    char msg[40];
-    sprintf(msg, "{\"value\": %.2f}", sensors.getTempCByIndex(0));
-    client.publish(topic, msg);
-
     delay(1000);
-    digitalWrite(LED_BUILTIN, LOW);
 }
