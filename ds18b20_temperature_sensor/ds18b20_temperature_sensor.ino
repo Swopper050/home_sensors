@@ -3,6 +3,7 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoOTA.h>
+#include "secrets.h"
 
 // Data wire is plugged into pin 2 on the Arduino 
 #define ONE_WIRE_BUS 2
@@ -18,28 +19,28 @@ DallasTemperature sensors(&oneWire);
 //===START-CONFIG===
 // Run
 const int updateEveryNSeconds = 10;
-int nSecondsSinceLastUpdate = 0;
 
 // WiFi
-const char *ssid = "";
-const char *wifiPassword = "";
+const char *ssid = WIFI_SSID;
+const char *wifiPassword = WIFI_PASSWORD;
 
 // OtA
-const char *OTAHostname = "";
-const char *OTAPassword = "";
+const char *OTAHostname = OTA_HOSTNAME;
+const char *OTAPassword = OTA_PASSWORD;
 const int OTAPort = 8266;
 
 // MQTT Broker
-const char *MQTTBrokerIP = "";
-const char *topic = "";
-const char *MQTTUsername = "";
-const char *MQTTPassword = "";
+const char *MQTTBrokerIP = MQTT_BROKER_IP;
+const char *topic = MQTT_TOPIC;
+const char *MQTTUsername = MQTT_USERNAME;
+const char *MQTTPassword = MQTT_PASSWORD;
 const int MQTTPort = 1883;
 //===END-CONFIG===
 
 
 WiFiClient espClient;
 PubSubClient client(espClient);
+int nSecondsSinceLastUpdate = 0;
 
 
 void setup(void) {

@@ -14,20 +14,24 @@ I flashed the sensor on arch using the Arduino IDE [here](https://archlinux.org/
 In order to build and flash the ESP8266, you need to install the board into the Arduino IDE (I blindly followed [this](https://randomnerdtutorials.com/how-to-install-esp8266-board-arduino-ide/) guide).
 Furthermore you need to install the libraries used in the file, and configure it accordingly.
 
-Settings to configure:
+Settings/secrets to configure (see `secrets.example.ino`):
 ```ino
-// Wifi
-const char *ssid = "";
-const char *password = "";
+// Rename this file to 'secrets.h' after filling in your secrets.
 
+#define WIFI_SSID "ssid"
+#define WIFI_PASSWORD "wifi_password"
 
-// MQTT Broker
-const char *mqtt_broker = "";
-const char *topic = "";
-const char *mqtt_username = "";
-const char *mqtt_password = "";
-const int mqtt_port = 1883;
+#define OTA_HOSTNAME "hostname"
+#define OTA_PASSWORD "ota_password"
+
+#define MQTT_BROKER_IP "ip"
+#define MQTT_TOPIC "your/topic"
+#define MQTT_USERNAME "mqtt_username"
+#define MQTT_PASSWORD "mqtt_password"
 ```
+
+Furthermore you can update the amount of times the sensor publishes to MQTT in the `.ino` file.
+
 
 Quick explanation of the soldering
 ----------------------------------
