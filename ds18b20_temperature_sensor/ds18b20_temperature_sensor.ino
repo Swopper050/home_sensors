@@ -15,22 +15,27 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 
+//===START-CONFIG===
+// Run
 const int updateEveryNSeconds = 10;
 int nSecondsSinceLastUpdate = 0;
 
+// WiFi
 const char *ssid = "";
 const char *wifiPassword = "";
 
-// OTA
-const char *OTAPassword = "";
+// OtA
 const char *OTAHostname = "";
+const char *OTAPassword = "";
+const int OTAPort = 8266;
 
 // MQTT Broker
-const char *mqttBrokerIP = "";
+const char *MQTTBrokerIP = "";
 const char *topic = "";
-const char *mqttUsername = "";
-const char *mqttPassword = "";
-const int mqttPort = 1883;
+const char *MQTTUsername = "";
+const char *MQTTPassword = "";
+const int MQTTPort = 1883;
+//===END-CONFIG===
 
 
 WiFiClient espClient;
@@ -50,8 +55,8 @@ void setup(void) {
     }
     Serial.println("Succesfully connected to WiFi!");
 
-    // Setup mqtt client
-    client.setServer(mqttBrokerIP, mqttPort);
+    // Setup MQTT client
+    client.setServer(MQTTBrokerIP, MQTTPort);
     reconnectMQTT();
 
     setupOTA();
@@ -62,9 +67,9 @@ void setup(void) {
 
 
 void setupOTA() {
-    ArduinoOTA.setPort(8266);
     ArduinoOTA.setHostname(OTAHostname);
     ArduinoOTA.setPassword(OTAPassword);
+    ArduinoOTA.setPort(OTAPort);
 
     ArduinoOTA.onStart([]() {
         Serial.println("Starting update..");
@@ -102,7 +107,7 @@ void reconnectMQTT() {
 
         Serial.printf("Trying to connect to the MQTT broker: %s\n", clientID.c_str());
 
-        if (client.connect(clientID.c_str(), mqttUsername, mqttPassword)) {
+        if (client.connect(clientID.c_str(), MQTTUsername, MQTTPassword)) {
             Serial.println("Succesfully connected to MQTT broker!");
         } else {
             Serial.println("Failed to connect to the MQTT broker: %s");
@@ -116,7 +121,7 @@ void loop(void) {
     ArduinoOTA.handle();
    
     nSecondsSinceLastUpdate += 1;
-    if (nSecondsSinceLastUpdate < updateEveryNSeconds) {
+    if (nSecondsSinceLastUpdate >= updateEveryNSeconds) {
         digitalWrite(LED_BUILTIN, HIGH);
 
         if (!client.connected()) {
