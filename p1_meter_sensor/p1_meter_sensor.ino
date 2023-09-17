@@ -5,33 +5,34 @@
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 #include "CRC16.h"
+#include "p1_meter_secrets.h"
 
 
 //===START-CONFIG===
 // WiFi
-const char* ssid = "";
-const char* wifiPassword = "";
+const char* ssid = WIFI_SSID;
+const char* wifiPassword = WIFI_PASSWORD;
 const bool debug = false;
 
 // OtA
-const char *OTAHostname = "";
-const char *OTAPassword = "";
+const char *OTAHostname = OTA_HOSTNAME;
+const char *OTAPassword = OTA_PASSWORD;
 const int OTAPort = 8266;
 
 // MQTT Broker
-const char *MQTTBrokerIP = "";
-const char *baseTopic = "";
-const char *MQTTUsername = "";
-const char *MQTTPassword = "";
+const char *MQTTBrokerIP = MQTT_BROKER_IP;
+const char *baseTopic = MQTT_BASE_TOPIC;
+const char *MQTTUsername = MQTT_USERNAME;
+const char *MQTTPassword = MQTT_PASSWORD;
 const int MQTTPort = 1883;
 
-const int energyConsumptionLowTarifTopicID = -1;
-const int energyConsumptionHighTarifTopicID = -1;
-const int energyYieldLowTarifTopicID = -1;
-const int energyYieldHighTarifTopicID = -1;
-const int energyActualConsumptionTopicID = -1;
-const int energyActualReturnTopicID = -1;
-const int gasUsageTopicID = -1; 
+const int energyConsumptionLowTarifTopicID = ENERGY_CONSUMPTION_LOW_TARIF_TOPIC_ID;
+const int energyConsumptionHighTarifTopicID = ENERGY_CONSUMPTION_HIGH_TARIF_TOPIC_ID;
+const int energyYieldLowTarifTopicID = ENERGY_YIELD_LOW_TARIF_TOPIC_ID;
+const int energyYieldHighTarifTopicID = ENERGY_YIELD_HIGH_TARIF_TOPIC_ID;
+const int energyActualConsumptionTopicID = ENERGY_ACTUAL_CONSUMPTION_TOPIC_ID;
+const int energyActualReturnTopicID = ENERGY_ACTUAL_RETURN_TOPIC_ID;
+const int gasUsageTopicID = GAS_USAGE_TOPIC_ID; 
 //===END-CONFIG===
 
 

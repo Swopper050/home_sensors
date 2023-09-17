@@ -15,29 +15,28 @@ Code and flashing the ESP8266
 I flashed the sensor on arch using the Arduino IDE [here](https://archlinux.org/packages/extra/x86_64/arduino/).
 Furthermore you need to install the libraries used in the file, and configure it accordingly.
 
-Settings to configure:
+Settings/secrets to configure (see `secrets.example.h`):
 ```ino
-//===START-CONFIG===
-// WIFI
-const char* ssid = "";
-const char* password = "";
-const bool debug = false;
+// Rename this file to 'secrets.h' after filling in your secrets.
 
-// MQTT Broker
-const char *mqtt_broker_ip = "";
-const char *base_topic = "";
-const char *mqtt_username = "";
-const char *mqtt_password = "";
-const int mqtt_port = 1883;
+#define WIFI_SSID "ssid"
+#define WIFI_PASSWORD "wifi_password"
 
-const int energyConsumptionLowTarifTopicID = -1; 
-const int energyConsumptionHighTarifTopicID = -1; 
-const int energyYieldLowTarifTopicID = -1; 
-const int energyYieldHighTarifTopicID = -1; 
-const int energyActualConsumptionTopicID = -1; 
-const int energyActualReturnTopicID = -1; 
-const int gasUsageTopicID = -1; 
-//===END-CONFIG===
+#define OTA_HOSTNAME "hostname"
+#define OTA_PASSWORD "ota_password"
+
+#define MQTT_BROKER_IP "ip"
+#define MQTT_TOPIC "your/topic"
+#define MQTT_USERNAME "mqtt_username"
+#define MQTT_PASSWORD "mqtt_password"
+
+#define ENERGY_CONSUMPTION_LOW_TARIF_TOPIC_ID 1
+#define ENERGY_CONSUMPTION_HIGH_TARIF_TOPIC_ID 2
+#define ENERGY_YIELD_LOW_TARIF_TOPIC_ID 3
+#define ENERGY_YIELD_HIGH_TARIF_TOPIC_ID 4
+#define ENERGY_ACTUAL_CONSUMPTION_TOPIC_ID 5
+#define ENERGY_ACTUAL_RETURN_TOPIC_ID 6
+#define GAS_USAGE_TOPIC_ID 7
 ```
 
 Quick explanation of the soldering

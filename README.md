@@ -26,5 +26,6 @@ Then, in order to flash an ESP8266, do the following:
  3. Open the file you want to flash.
  4. Under `Tools > Board` select the `Generic ESP8266 Moduel` option (make sure to add the board first as described above).
  5. Under `Tools > port` select the right port, i.e. your ESP8266 (this can be a network port for over the air (OtA) updates).
- 6. Make sure the settings are configured correctly (wifi and everything).
+ 6. Make sure the settings and secrets are configured correctly (have a look at the `secrets.example.h` files and
+    how they are included in the `.ino` files).
  7. Click `Upload` and wih fingers crossed it probably will work 73.2% of the time. 
