@@ -1,2 +1,8 @@
 *.h
 !*.example.h
+
+.env
+
+vars.env
+scripts/*.json
+
