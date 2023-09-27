@@ -128,13 +128,28 @@ void publishValue(float value, int sensorID) {
 }
 
 void publishAllValues() {
-    publishValue(energyConsumptionLowTarif, energyConsumptionLowTarifTopicID);
-    publishValue(energyConsumptionHighTarif, energyConsumptionHighTarifTopicID);
-    publishValue(energyYieldLowTarif, energyYieldLowTarifTopicID);
-    publishValue(energyYieldHighTarif, energyYieldHighTarifTopicID);
+    if (energyConsumptionLowTarif > 1) {
+        publishValue(energyConsumptionLowTarif, energyConsumptionLowTarifTopicID);
+    }
+
+    if (energyConsumptionHighTarif > 1) {
+        publishValue(energyConsumptionHighTarif, energyConsumptionHighTarifTopicID);
+    }
+
+    if (energyYieldLowTarif > 1) {
+        publishValue(energyYieldLowTarif, energyYieldLowTarifTopicID);
+    }
+
+    if (energyYieldHighTarif > 1) {
+        publishValue(energyYieldHighTarif, energyYieldHighTarifTopicID);
+    }
+
     publishValue(energyActualConsumption, energyActualConsumptionTopicID);
     publishValue(energyActualReturn, energyActualReturnTopicID);
-    publishValue(gasUsage, gasUsageTopicID);
+
+    if (gasUsage > 1) {
+        publishValue(gasUsage, gasUsageTopicID);
+    }
 }
 
 
